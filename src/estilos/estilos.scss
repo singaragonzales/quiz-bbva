@@ -129,6 +129,22 @@
                     height: 50px;
                 }
             }
+            .sedes-container{
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    height: 0px;
+                  }
+                
+                  &::-webkit-scrollbar-track {
+                    width: 5px;
+                    height: 0px;
+                  }
+                
+                  &::-webkit-scrollbar-thumb {
+                    border-radius: 10px;
+                    background-color: rgb(36 18 81 / 70%);
+                  }
+            }
         }
         .button-siguiente{
             border: 2px solid #004680;

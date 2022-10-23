@@ -37,7 +37,7 @@ function App() {
 
   const cities = [
     { name: 'Ancón', code: 'Ancón' },
-    { name: 'Ate Vitarte', code: 'Ate Vitarte' },
+    { name: 'Ate', code: 'Ate' },
     { name: 'Barranco', code: 'Barranco' },
     { name: 'Breña', code: 'Breña' },
     { name: 'Carabayllo', code: 'Carabayllo' },
@@ -92,8 +92,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comenzar]);
 
-
-
     const items = [
         {
             label: 'Dirección',
@@ -105,6 +103,29 @@ function App() {
             label: 'Términos',
         }
     ];
+
+    const sedes = [
+      {
+          distrito: 'ATE',
+          direccion: "AV. LOS PARACAS 203 URB. SALAMANCA",
+          oficina: "SALAMANCA"
+      },
+      {
+        distrito: 'ATE',
+        direccion: "AV. NICOLAS AYLLON 5345 - URB LOS ANGELES",
+        oficina: "CERES"
+      },
+      {
+        distrito: 'BARRANCO',
+        direccion: "AV. GRAU 414 ESQ. CA. UNION",
+        oficina: "BARRANCO"
+      },
+      {
+        distrito: 'BARRANCO',
+        direccion: "PLAZA BUTTERS 101",
+        oficina: "PLAZA BUTTERS"
+      },
+  ];
 
     const paymentOptions = [
       {name: 'Linio', value: 1},
@@ -259,10 +280,61 @@ function App() {
         break;
     }
   }
+
+  const verSedesCercanas = () => {
+    let distritioUpper = distrito.name.toUpperCase()
+    let sedeCercana = sedes.filter(e => e.distrito === distritioUpper)
+    let sedeNoCercana = sedes.filter(e => e.distrito !== distritioUpper)
+    if(sedeCercana.length > 0){
+      return(
+        <React.Fragment>
+          <p className='mb-[20px]'>Estas son las sedes mas cercanas en su distrito:</p>
+          <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
+            {sedeCercana.map((t) => {
+              return(
+                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
+                </Card>
+              )
+            })}
+          </div>
+          <div className='border-t border-t-[#6c757d] w-full py-[17px]'></div>
+          <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
+            {sedeNoCercana.map((t) => {
+              return(
+                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
+                </Card>
+              )
+            })}
+          </div>
+        </React.Fragment>
+      )
+    }else{
+      return (
+        <React.Fragment>
+          <p className='mb-[20px]'>Lo sentimos, no hay una sede cercana a su dirección, puede elegir cualquiera de estas otras sedes.</p>
+          <div className='border-t border-t-[#6c757d] w-full py-[17px]'></div>
+          <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
+            {sedeNoCercana.map((t) => {
+              return(
+                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
+                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
+                </Card>
+              )
+            })}
+          </div>
+        </React.Fragment>
+      )
+    }
+  }
   
 
   return (
-    <div className="container-fluid p-[20px] h-[100vh] w-[100%] flex justify-center items-center">
+    <div className="container-fluid p-[20px] min-h-[100vh] w-[100%] flex justify-center items-center">
       {comenzar === false ? (
         <div className="home-container">
           <div className='flex flex-col gap-[30px]'>
@@ -328,39 +400,10 @@ function App() {
                 {activeIndex === 1 &&(
                   <React.Fragment>
                     <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">A continuación, deberá escoger la sede en la que recogerá su nueva tarjeta.</p>
-                    <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
-                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
-                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-                      </Card>
+                    <div className="sedes-container flex w-full gap-[20px] justify-center items-center flex-wrap max-h-[500px] overflow-y-auto">
+                      <div>
+                        {verSedesCercanas()}
+                      </div>
                     </div>
                   </React.Fragment>
                 )}
