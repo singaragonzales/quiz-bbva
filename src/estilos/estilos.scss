@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .container-fluid{
     background: linear-gradient(to bottom right, #89D1F3, #ebedfd, #89D1F3);
     .home-container{
@@ -33,8 +37,6 @@
             }
         }
     }
-
-    //Formulario
     .steps-demo{
         font-family: "Montserrat";
         .card{
@@ -207,9 +209,6 @@
         }
     }
 }
-
-
-//Loader
 .loading {
     display: flex;
     flex-direction: column;

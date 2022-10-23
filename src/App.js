@@ -70,6 +70,45 @@ function App() {
     { name: 'Villa María del Triunfo', code: 'Villa María del Triunfo' },
   ];
 
+  const items = [
+    {
+        label: 'Dirección',
+    },
+    {
+        label: 'Sede',
+    },
+    {
+        label: 'Términos',
+    }
+  ];
+
+  const sedes = [
+    {
+        id:"1",
+        distrito: 'ATE',
+        direccion: "AV. LOS PARACAS 203 URB. SALAMANCA",
+        oficina: "SALAMANCA"
+    },
+    {
+      id:"2",
+      distrito: 'ATE',
+      direccion: "AV. NICOLAS AYLLON 5345 - URB LOS ANGELES",
+      oficina: "CERES"
+    },
+    {
+      id:"3",
+      distrito: 'BARRANCO',
+      direccion: "AV. GRAU 414 ESQ. CA. UNION",
+      oficina: "BARRANCO"
+    },
+    {
+      id:"4",
+      distrito: 'BARRANCO',
+      direccion: "PLAZA BUTTERS 101",
+      oficina: "PLAZA BUTTERS"
+    },
+  ];
+
   React.useEffect(() => {
     setTimeout(() => {
       if(comenzar === true){
@@ -79,45 +118,6 @@ function App() {
     }, 1500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comenzar]);
-
-    const items = [
-        {
-            label: 'Dirección',
-        },
-        {
-            label: 'Sede',
-        },
-        {
-            label: 'Términos',
-        }
-    ];
-
-    const sedes = [
-      {
-          id:"1",
-          distrito: 'ATE',
-          direccion: "AV. LOS PARACAS 203 URB. SALAMANCA",
-          oficina: "SALAMANCA"
-      },
-      {
-        id:"2",
-        distrito: 'ATE',
-        direccion: "AV. NICOLAS AYLLON 5345 - URB LOS ANGELES",
-        oficina: "CERES"
-      },
-      {
-        id:"3",
-        distrito: 'BARRANCO',
-        direccion: "AV. GRAU 414 ESQ. CA. UNION",
-        oficina: "BARRANCO"
-      },
-      {
-        id:"4",
-        distrito: 'BARRANCO',
-        direccion: "PLAZA BUTTERS 101",
-        oficina: "PLAZA BUTTERS"
-      },
-    ];
 
   const validNumber = new RegExp(/^[\d\s]*$/);
 

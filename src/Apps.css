@@ -1,22 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @import "./estilos/estilos.scss";
-
-.container-home{
-    height: 100vh;
-    flex-direction: column;
-}
 
 .steps-demo{
     width: 100%;
     height: calc(100% - 80px);
     margin-top: 90px;
-}
-
-.multiple-option-button{
-    gap: 10px;
-    display: flex;
 }
 
 .p-button.p-component{

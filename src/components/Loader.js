@@ -29,7 +29,7 @@ const Loader = () => {
 
   return (
     <div className="loading flex flex-col">
-      <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">Cargando.</p>
+      <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">Cargando...</p>
       <div className="progress-container">
         <ProgressBar
           className="loading-progress"
