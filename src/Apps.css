@@ -13,13 +13,6 @@
     margin-top: 90px;
 }
 
-.steps{
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
 .paso2-botones{
     display: grid !important;
     grid-template-columns: repeat(2, 1fr);

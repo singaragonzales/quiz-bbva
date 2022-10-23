@@ -3,13 +3,28 @@ import { Steps } from 'primereact/steps';
 import { Slider } from 'primereact/slider';
 import { Button } from 'primereact/button';
 import { SelectButton } from 'primereact/selectbutton';
+import { InputText } from 'primereact/inputtext';
+import { Card } from 'primereact/card';
+import { AutoComplete } from 'primereact/autocomplete';
 import Bfree from './assets/Bfree.jpeg'
 import Black from './assets/Black.jpeg'
 import Cero from './assets/Cero.jpeg'
 import Platinum from './assets/Gray.jpeg'
 
 import "./Apps.css";
+import "./estilos/estilos.scss";
+import Loader from './components/Loader';
 function App() {
+
+  const [comenzar, setComenzar] = useState(false);
+  const [loader, setLoader] = useState(true);
+  const [direccionAv, setDireccionAv] = useState("");
+  const [direccion, setDireccion] = useState("");
+  const [direccionNumero, setDireccionNumero] = useState("");
+  const [ciudad, setCiudad] = useState("");
+  const [distrito, setDistrito] = useState("");
+  const [distritos, setDistritos] = useState([]);
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [puntoPaso1, setPuntoPaso1] = useState(0);
@@ -20,18 +35,74 @@ function App() {
   const [puntajes, setPuntajes] = useState([0,0,0,0,0]);
   const [tarjeta, setTarjeta] = useState(null);
 
+  const cities = [
+    { name: 'Ancón', code: 'Ancón' },
+    { name: 'Ate Vitarte', code: 'Ate Vitarte' },
+    { name: 'Barranco', code: 'Barranco' },
+    { name: 'Breña', code: 'Breña' },
+    { name: 'Carabayllo', code: 'Carabayllo' },
+    { name: 'Chaclacayo', code: 'Chaclacayo' },
+    { name: 'Chorrillos', code: 'Chorrillos' },
+    { name: 'Cieneguilla', code: 'Cieneguilla' },
+    { name: 'Comas', code: 'Comas' },
+    { name: 'El Agustino', code: 'El Agustino' },
+    { name: 'Independencia', code: 'Independencia' },
+    { name: 'Jesús María', code: 'Jesús María' },
+    { name: 'La Molina', code: 'La Molina' },
+    { name: 'La Victoria', code: 'La Victoria' },
+    { name: 'Lima', code: 'Lima' },
+    { name: 'Lince', code: 'Chaclacayo' },
+    { name: 'Los Olivos', code: 'Los Olivos' },
+    { name: 'Lurigancho', code: 'Lurigancho' },
+    { name: 'Lurín', code: 'Lurín' },
+    { name: 'Magdalena del Mar', code: 'Magdalena del Mar' },
+    { name: 'Miraflores', code: 'Miraflores' },
+    { name: 'Pachacamac', code: 'Pachacamac' },
+    { name: 'Pueblo Libre', code: 'Pueblo Libre' },
+    { name: 'Puente Piedra', code: 'Puente Piedra' },
+    { name: 'Punta Hermosa', code: 'Punta Hermosa' },
+    { name: 'Punta Negra', code: 'Punta Negra' },
+    { name: 'Rímac', code: 'Rímac' },
+    { name: 'San Bartolo', code: 'San Bartolo' },
+    { name: 'San Borja', code: 'San Borja' },
+    { name: 'San Isidro', code: 'San Isidro' },
+    { name: 'San Juan de Lurigancho', code: 'San Juan de Lurigancho' },
+    { name: 'San Juan de Miraflores', code: 'San Juan de Miraflores' },
+    { name: 'San Luis', code: 'San Luis' },
+    { name: 'San Martín de Porres', code: 'San Martín de Porres' },
+    { name: 'San Miguel', code: 'San Miguel' },
+    { name: 'Santa Anita', code: 'Santa Anita' },
+    { name: 'Santa María del Mar', code: 'Santa María del Mar' },
+    { name: 'Santa Rosa', code: 'Santa Rosa' },
+    { name: 'Santiago de Surco', code: 'Santiago de Surco' },
+    { name: 'Surquillo', code: 'Surquillo' },
+    { name: 'Villa El Salvador', code: 'Villa El Salvador' },
+    { name: 'Villa María del Triunfo', code: 'Villa María del Triunfo' },
+
+];
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      if(comenzar === true){
+        setDistritos(cities)
+        setLoader(false)
+      }
+    }, 2000);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comenzar]);
+
+
+
     const items = [
         {
-            label: 'Viajes',
+            label: 'Dirección',
         },
         {
-            label: 'Restaurantes',
+            label: 'Sede',
         },
         {
-            label: 'Cine',
-        },
-        {
-            label: 'Compras',
+            label: 'Términos',
         }
     ];
 
@@ -157,131 +228,218 @@ function App() {
     calcularPuntaje();
     evaluarTarjeta(copyPuntajes);
   }
+
+  const validNumber = new RegExp(/^[\d\s]*$/);
+
+  const searchDistrito = (event) => {
+    setTimeout(() => {
+        let _filteredCountries;
+        if (!event.query.trim().length) {
+            _filteredCountries = [...cities];
+        }
+        else {
+            _filteredCountries = cities.filter((country) => {
+                return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+            });
+        }
+        console.log(_filteredCountries)
+        setDistritos(_filteredCountries);
+    }, 0);
+}
+
+  const checkFormulario = () => {
+    switch (activeIndex) {
+      case 0:
+        if(direccionAv === "" ||  direccion === "" || direccionNumero === "" || ciudad === "" || distrito === ""){
+          return true
+        }else{
+          return false;
+        }
+      default:
+        break;
+    }
+  }
   
 
   return (
-    <div className="container-fluid flex">
-      <div className="menu-home bg-[#ff0000] w-full h-[80px] fixed flex">
-        MENÚ
-      </div>
-      
-        <div className="steps-demo">
-          <div className="card">
-              <Steps model={items} activeIndex={activeIndex} onSelect={(e) => setActiveIndex(e.index)} readOnly={false} />
+    <div className="container-fluid p-[20px] h-[100vh] w-[100%] flex justify-center items-center">
+      {comenzar === false ? (
+        <div className="home-container">
+          <div className='flex flex-col gap-[30px]'>
+            <p className="font-['Montserrat'] text-[4em] font-bold text-[#004680]">Bienvenido a BBVA AQUA</p>
+            <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">¡Felicitaciones! Usted tiene una tarjeta pre-aprobada, a continuacion llenaremos algunos datos.</p>
           </div>
-          {obtenerTarjeta === false ? (
-              <div className='steps'>
-              {activeIndex === 0 &&(
-                <React.Fragment>
-                  <p>¿Con que Frecuencia sueles viajar?</p>
-                  <h5>{numerosFrases(puntoPaso1)}</h5>
+          <div className='min-h-[80px]'>
+            <Button className="button-comenzar"
+              onClick={() => {
+                setComenzar(true)
+              }}
+            >COMENZAR</Button>
+          </div>
+      </div>
+      ) : (
+        <React.Fragment>
+          {loader ? (
+            <Loader />
+          ) : (
+            <div className="steps-demo">
+            <div className="card">
+                <Steps model={items} activeIndex={activeIndex} readOnly={false}/>
+            </div>
+            {obtenerTarjeta === false ? (
+                <div className='steps'>
+                {activeIndex === 0 &&(
+                  <React.Fragment>
+                    <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">Primero debera llenar los datos de su dirección.</p>
+                    <div className='flex gap-[50px] justify-around'>
+                      <div>
+                        <h5>(Av. Jr. Psj. Calle)<span className='text-[#ff0000] text-[16px]'>*</span></h5>
+                        <InputText maxLength={8} className='w-[200px]' value={direccionAv} onChange={(e) => setDireccionAv(e.target.value)} />
+                      </div>
+                      <div>
+                        <h5>Dirección<span className='text-[#ff0000] text-[16px]'>*</span></h5>
+                        <InputText className='w-[500px]' value={direccion}  onChange={(e) => {setDireccion(e.target.value)}} />
+                      </div>
+                    </div>
+                    <div className='flex gap-[50px] justify-around'>
+                      <div>
+                        <h5>Número<span className='text-[#ff0000] text-[16px]'>*</span></h5>
+                        <InputText maxLength={7} className='w-[200px]' value={direccionNumero} 
+                          onChange={(e) => {
+                            if(validNumber.test(e.target.value)){
+                              setDireccionNumero(e.target.value)
+                            }
+                          }}
+                        />              
+                      </div>
+                      <div>
+                        <h5>Ciudad<span className='text-[#ff0000] text-[16px]'>*</span></h5>
+                        <InputText className='w-[500px]' value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className='flex gap-[50px] justify-around'>
+                      <div>
+                        <h5>Distrito<span className='text-[#ff0000] text-[16px]'>*</span></h5>
+                        <AutoComplete className='w-[500px] autocomplete-form' value={distrito} suggestions={distritos} dropdown forceSelection completeMethod={searchDistrito} field="name" onChange={(e) => setDistrito(e.value)} aria-label="Countries" dropdownAriaLabel="Select Country" />
+                      </div>
+                    </div>
+                  </React.Fragment>
+                )}
+                {activeIndex === 1 &&(
+                  <React.Fragment>
+                    <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">A continuación, deberá escoger la sede en la que recogerá su nueva tarjeta.</p>
+                    <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                      <Card title="Simple Card" style={{ width: '25rem', marginBottom: '2em' }}>
+                          <p className="m-0" style={{lineHeight: '1.5'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                      </Card>
+                    </div>
+                  </React.Fragment>
+                )}
+                {activeIndex === 2 &&(
+                  <React.Fragment>
+                  <p>¿Con que Frecuencia sueles ir al cine?</p>
+                  <h5>{numerosFrasesPaso3(puntoPaso3)}</h5>
                   <Slider 
-                    value={puntoPaso1} 
+                    value={puntoPaso3} 
                     onChange={(e) => {
-                      setPuntoPaso1(e.value)
+                      setPuntoPaso3(e.value)
                     }}
                     step={1} 
                     max={4}
                     animate={"true"}
                   />
                 </React.Fragment>
-              )}
-              {activeIndex === 1 &&(
-                <React.Fragment>
-                  <p>¿Con que Frecuencia sales a comer fuera de casa?</p>
-                  <div className='paso2-botones flex flex-row'>
-                    <Button label="Prefiero comer en casa" className="p-button-outlined w-[300px]" 
-                      onClick={() => {
-                        setPuntoPaso2(0)
-                      }}
-                    />
-                    <Button label="Una vez al mes" className="p-button-outlined w-[300px] " 
-                      onClick={() => {
-                        setPuntoPaso2(1)
-                      }}
-                    />
-                    <Button label="Cada 15 días" className="p-button-outlined w-[300px]" 
-                      onClick={() => {
-                        setPuntoPaso2(2)
-                      }}
-                    />
-                    <Button label="Una vez por semana" className="p-button-outlined w-[300px]" 
-                      onClick={() => {
-                        setPuntoPaso2(3)
-                      }}
-                    />
-                  </div>
-                </React.Fragment>
-              )}
-              {activeIndex === 2 &&(
-                <React.Fragment>
-                <p>¿Con que Frecuencia sueles ir al cine?</p>
-                <h5>{numerosFrasesPaso3(puntoPaso3)}</h5>
-                <Slider 
-                  value={puntoPaso3} 
-                  onChange={(e) => {
-                    setPuntoPaso3(e.value)
-                  }}
-                  step={1} 
-                  max={4}
-                  animate={"true"}
-                />
-              </React.Fragment>
-              )}
-              {activeIndex === 3 &&(
-                <React.Fragment>
-                  <p>En cuales de estas tiendas sueles comprar mas</p>
-                  <SelectButton className='multiple-option-button' value={puntoPaso4} options={paymentOptions} onChange={(e) => { console.log(e); setPuntoPaso4(e.value)}} optionLabel="name" multiple />
-                </React.Fragment>
-              )}
-              <div className='flex p-[20px] justify-evenly'>
-                {activeIndex !== 0 && (
-                  <Button label="Anterior" className="p-button-lg" 
-                      onClick={()=>{
-                        setActiveIndex(activeIndex - 1)
+                )}
+                {activeIndex === 3 &&(
+                  <React.Fragment>
+                    <p>En cuales de estas tiendas sueles comprar mas</p>
+                    <SelectButton className='multiple-option-button' value={puntoPaso4} options={paymentOptions} onChange={(e) => { console.log(e); setPuntoPaso4(e.value)}} optionLabel="name" multiple />
+                  </React.Fragment>
+                )}
+                <div className='flex p-[20px] justify-evenly'>
+                  {activeIndex !== 0 && (
+                    <Button label="Anterior" className="p-button-lg" 
+                        onClick={()=>{
+                          setActiveIndex(activeIndex - 1)
 
-                    }}
-                  />
-                )}
-                {activeIndex !== 3 && (
-                  <Button label="Siguiente" className="p-button-lg" 
-                      onClick={()=>{
-                        if(activeIndex === 0){
-                          calcularPaso1()
-                        }
-                        if(activeIndex === 1){
-                          calcularPaso2()
-                        }
-                        if(activeIndex === 2){
-                          calcularPaso3()
-                        }
-                        setActiveIndex(activeIndex + 1)
-                    }}
-                  />
-                )}
-                {activeIndex === 3 && (
-                  <Button label="Finalizar" className="p-button-lg" 
-                      onClick={()=>{
-                        calcularPaso4()
-                    }}
-                  />
-                )}
-              </div>
-          </div>
-          ) : (
-            <div>
-              <img src={tarjeta.imagen} alt=""className='w-[100px] h-[100px]'/>
-              <p>{tarjeta.nombre}</p>
-              {tarjeta.beneficios.map((elem) => {
-                return (
-                  <p>{elem}</p>
-                )
-              })}
-              <p>{tarjeta.lineaCredito}</p>
+                      }}
+                    />
+                  )}
+                  {activeIndex !== 3 && (
+                    <Button label="Siguiente" className=" button-siguiente p-button-lg"
+                        disabled={checkFormulario()}
+                        onClick={()=>{
+                          if(activeIndex === 0){
+                            calcularPaso1()
+                          }
+                          if(activeIndex === 1){
+                            calcularPaso2()
+                          }
+                          if(activeIndex === 2){
+                            calcularPaso3()
+                          }
+                          setActiveIndex(activeIndex + 1)
+                      }}
+                    />
+                  )}
+                  {activeIndex === 3 && (
+                    <Button label="Finalizar" className="p-button-lg" 
+                        onClick={()=>{
+                          calcularPaso4()
+                      }}
+                    />
+                  )}
+                </div>
             </div>
+            ) : (
+              <div>
+                <img src={tarjeta.imagen} alt=""className='w-[100px] h-[100px]'/>
+                <p>{tarjeta.nombre}</p>
+                {tarjeta.beneficios.map((elem) => {
+                  return (
+                    <p>{elem}</p>
+                  )
+                })}
+                <p>{tarjeta.lineaCredito}</p>
+              </div>
+            )}
+        </div>
           )}
           
-      </div>
+        </React.Fragment>
+        
+           
+      )}
+      
     </div>
   );
 }
