@@ -69,7 +69,8 @@
                     left: 0;
                     display: block;
                     position: absolute;
-                    margin-top: 0rem;
+                    border-left: none;
+                    margin: 0px
                 }
 
             }
@@ -102,7 +103,8 @@
                     left: 0;
                     display: block;
                     position: absolute;
-                    margin-top: 0rem;
+                    border-left: none;
+                    margin: 0px
                 }
             }
         }
@@ -170,6 +172,28 @@
                     box-shadow:  11px 8px 38px rgb(36 33 30 / 17%)
                   }
             }
+            .terminos-container{
+                max-width: 70rem;
+                padding: 20px;
+                background: #f7f7f7;
+                border-radius: 10px;
+                max-height: 550px;
+                overflow-y: auto;
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    height: 0px;
+                  }
+                
+                &::-webkit-scrollbar-track {
+                    width: 5px;
+                    height: 0px;
+                }
+                
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 10px;
+                    background-color: gray;
+                }
+              }
         }
         .button-siguiente, .button-anterior{
             border: 2px solid #004680;
