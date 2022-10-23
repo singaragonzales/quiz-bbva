@@ -144,9 +144,34 @@
                     border-radius: 10px;
                     background-color: rgb(36 18 81 / 70%);
                   }
+
+                  .card-sede{
+                    min-height: 200px;
+                    width: 25rem;
+                    margin-bottom: 2em;
+                    border: 2px solid gray;
+                    font-family: "Montserrat";
+                    box-shadow: none;
+                    cursor: pointer;
+                    &:hover{
+                        border: 3px solid #004680;
+                        box-shadow:  11px 8px 38px rgb(36 33 30 / 17%)
+                    }
+                    .p-card-content{
+                        padding: 15px 0;
+                    }
+                    &.active{
+                        border: 3px solid #004680;
+                        box-shadow:  11px 8px 38px rgb(36 33 30 / 17%)
+                    }
+                  }
+                  .card-sede.active{
+                    border: 3px solid #004680;
+                    box-shadow:  11px 8px 38px rgb(36 33 30 / 17%)
+                  }
             }
         }
-        .button-siguiente{
+        .button-siguiente, .button-anterior{
             border: 2px solid #004680;
             background: #004680;
             font-family: "Montserrat";

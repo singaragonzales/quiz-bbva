@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Steps } from 'primereact/steps';
-import { Slider } from 'primereact/slider';
 import { Button } from 'primereact/button';
 import { SelectButton } from 'primereact/selectbutton';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { AutoComplete } from 'primereact/autocomplete';
+import { Checkbox } from 'primereact/checkbox';
 import Bfree from './assets/Bfree.jpeg'
 import Black from './assets/Black.jpeg'
 import Cero from './assets/Cero.jpeg'
@@ -24,7 +24,8 @@ function App() {
   const [ciudad, setCiudad] = useState("");
   const [distrito, setDistrito] = useState("");
   const [distritos, setDistritos] = useState([]);
-
+  const [sede, setSede] = useState({});
+  const [terminosCondiciones, setTerminosCondiciones] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [puntoPaso1, setPuntoPaso1] = useState(0);
@@ -106,21 +107,25 @@ function App() {
 
     const sedes = [
       {
+          id:"1",
           distrito: 'ATE',
           direccion: "AV. LOS PARACAS 203 URB. SALAMANCA",
           oficina: "SALAMANCA"
       },
       {
+        id:"2",
         distrito: 'ATE',
         direccion: "AV. NICOLAS AYLLON 5345 - URB LOS ANGELES",
         oficina: "CERES"
       },
       {
+        id:"3",
         distrito: 'BARRANCO',
         direccion: "AV. GRAU 414 ESQ. CA. UNION",
         oficina: "BARRANCO"
       },
       {
+        id:"4",
         distrito: 'BARRANCO',
         direccion: "PLAZA BUTTERS 101",
         oficina: "PLAZA BUTTERS"
@@ -263,7 +268,6 @@ function App() {
                 return country.name.toLowerCase().startsWith(event.query.toLowerCase());
             });
         }
-        console.log(_filteredCountries)
         setDistritos(_filteredCountries);
     }, 0);
 }
@@ -272,6 +276,18 @@ function App() {
     switch (activeIndex) {
       case 0:
         if(direccionAv === "" ||  direccion === "" || direccionNumero === "" || ciudad === "" || distrito === ""){
+          return true
+        }else{
+          return false;
+        }
+      case 1:
+        if(sede.id === undefined){
+          return true
+        }else{
+          return false;
+        }
+      case 2:
+        if(terminosCondiciones === false){
           return true
         }else{
           return false;
@@ -292,10 +308,7 @@ function App() {
           <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
             {sedeCercana.map((t) => {
               return(
-                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
-                </Card>
+                cardContainer(t)
               )
             })}
           </div>
@@ -303,10 +316,7 @@ function App() {
           <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
             {sedeNoCercana.map((t) => {
               return(
-                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
-                </Card>
+                cardContainer(t)
               )
             })}
           </div>
@@ -320,16 +330,26 @@ function App() {
           <div className="flex w-full gap-[20px] justify-center items-center flex-wrap">
             {sedeNoCercana.map((t) => {
               return(
-                <Card title={t.distrito} style={{ minHeight:"200px", width: '25rem', marginBottom: '2em' }}>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Oficina: ${t.oficina}`}</p>
-                  <p className="m-0" style={{lineHeight: '1.5'}}>{`Distrito: ${t.direccion}`}</p>
-                </Card>
+                cardContainer(t)
               )
             })}
           </div>
         </React.Fragment>
       )
     }
+  }
+
+  const cardContainer = (data) => {
+    return(
+      <Card className={`card-sede ${sede.id === data.id ? "active" : ""}`} title={data.distrito}
+        onClick={() => {
+          setSede(data)
+        }}
+      >
+        <p className="m-0"><b>Oficina:</b>{` ${data.oficina}`}</p>
+        <p className="m-0"><b>Distrito:</b>{` ${data.direccion}`}</p>
+      </Card>
+    )
   }
   
 
@@ -400,7 +420,7 @@ function App() {
                 {activeIndex === 1 &&(
                   <React.Fragment>
                     <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">A continuación, deberá escoger la sede en la que recogerá su nueva tarjeta.</p>
-                    <div className="sedes-container flex w-full gap-[20px] justify-center items-center flex-wrap max-h-[500px] overflow-y-auto">
+                    <div className="sedes-container flex w-full gap-[20px] justify-center items-center flex-wrap max-h-[518px] overflow-y-auto">
                       <div>
                         {verSedesCercanas()}
                       </div>
@@ -409,17 +429,14 @@ function App() {
                 )}
                 {activeIndex === 2 &&(
                   <React.Fragment>
-                  <p>¿Con que Frecuencia sueles ir al cine?</p>
-                  <h5>{numerosFrasesPaso3(puntoPaso3)}</h5>
-                  <Slider 
-                    value={puntoPaso3} 
-                    onChange={(e) => {
-                      setPuntoPaso3(e.value)
-                    }}
-                    step={1} 
-                    max={4}
-                    animate={"true"}
-                  />
+                    <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">A continuación, deberá aceptar los Términos y Condiciones.</p>
+                    <div>
+                      <p></p>
+                    </div>
+                    <div className="field-checkbox">
+                        <Checkbox inputId="binary" checked={terminosCondiciones} onChange={e => setTerminosCondiciones(e.checked)} />
+                        <label htmlFor="binary">He leído y Acepto los Términos y Condiciones</label>
+                    </div>
                 </React.Fragment>
                 )}
                 {activeIndex === 3 &&(
@@ -430,32 +447,24 @@ function App() {
                 )}
                 <div className='flex p-[20px] justify-evenly'>
                   {activeIndex !== 0 && (
-                    <Button label="Anterior" className="p-button-lg" 
+                    <Button label="Anterior" className="button-anterior p-button-lg" 
                         onClick={()=>{
                           setActiveIndex(activeIndex - 1)
 
                       }}
                     />
                   )}
-                  {activeIndex !== 3 && (
-                    <Button label="Siguiente" className=" button-siguiente p-button-lg"
+                  {activeIndex !== 2 && (
+                    <Button label="Siguiente" className="button-siguiente p-button-lg"
                         disabled={checkFormulario()}
                         onClick={()=>{
-                          if(activeIndex === 0){
-                            calcularPaso1()
-                          }
-                          if(activeIndex === 1){
-                            calcularPaso2()
-                          }
-                          if(activeIndex === 2){
-                            calcularPaso3()
-                          }
                           setActiveIndex(activeIndex + 1)
                       }}
                     />
                   )}
-                  {activeIndex === 3 && (
-                    <Button label="Finalizar" className="p-button-lg" 
+                  {activeIndex === 2 && (
+                    <Button label="Finalizar" className="button-siguiente p-button-lg" 
+                        disabled={checkFormulario()}
                         onClick={()=>{
                           calcularPaso4()
                       }}
