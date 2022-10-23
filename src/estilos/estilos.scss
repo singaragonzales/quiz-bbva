@@ -49,6 +49,7 @@
                     background: #c2c1d9;
                     padding: 9px;
                     height: fit-content;
+                    cursor: default;
                     .p-steps-number{
                         background-color: transparent;
                         border: none;
@@ -211,6 +212,7 @@
 //Loader
 .loading {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   
@@ -231,6 +233,28 @@
       .p-progressbar-value {
         background: #004680;
       }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .steps-demo{
+        margin-top: 0px;
+    }
+    .steps{
+        padding: 20px 0px;
+        .form-info{
+            width: 100% !important;
+            flex-direction: column !important;
+            gap: 15px !important;
+            input, .p-autocomplete{
+                width: 100% !important;
+            }
+        }
+        .sedes-container{
+            .sedes-cercanas{
+                width: inherit;
+            }
+        }
     }
   }
 
@@ -264,14 +288,5 @@
     }
     .steps-demo .p-steps > ul .p-steps-item .p-menuitem-link .p-steps-title {
         margin: 0 .5rem 0;
-    }
-    .steps-demo .p-steps > ul .p-steps-item:last-child {
-        flex-grow: 0;
-    }
-    .steps-demo .p-steps > ul .p-steps-item:last-child .p-menuitem-link {
-        padding: 0;
-    }
-    .steps-demo .p-steps > ul .p-steps-item:last-child:before {
-        display: none;
     }
 }

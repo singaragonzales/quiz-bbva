@@ -247,7 +247,7 @@ function App() {
                     {activeIndex === 0 &&(
                       <React.Fragment>
                         <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">Primero debera llenar los datos de su dirección.</p>
-                        <div className='flex gap-[50px] justify-around'>
+                        <div className='form-info flex gap-[50px] justify-around'>
                           <div>
                             <h5>(Av. Jr. Psj. Calle)<span className='text-[#ff0000] text-[16px]'>*</span></h5>
                             <InputText maxLength={8} className='w-[200px]' value={direccionAv} onChange={(e) => setDireccionAv(e.target.value)} />
@@ -257,7 +257,7 @@ function App() {
                             <InputText className='w-[500px]' value={direccion}  onChange={(e) => {setDireccion(e.target.value)}} />
                           </div>
                         </div>
-                        <div className='flex gap-[50px] justify-around'>
+                        <div className='form-info flex gap-[50px] justify-around'>
                           <div>
                             <h5>Número<span className='text-[#ff0000] text-[16px]'>*</span></h5>
                             <InputText maxLength={7} className='w-[200px]' value={direccionNumero} 
@@ -273,7 +273,7 @@ function App() {
                             <InputText className='w-[500px]' value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
                           </div>
                         </div>
-                        <div className='flex gap-[50px] justify-around'>
+                        <div className='form-info flex gap-[50px] justify-around'>
                           <div>
                             <h5>Distrito<span className='text-[#ff0000] text-[16px]'>*</span></h5>
                             <AutoComplete className='w-[500px] autocomplete-form' value={distrito} suggestions={distritos} dropdown forceSelection completeMethod={searchDistrito} field="name" onChange={(e) => setDistrito(e.value)} aria-label="Countries" dropdownAriaLabel="Select Country" />
@@ -285,7 +285,7 @@ function App() {
                       <React.Fragment>
                         <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">A continuación, deberá escoger la sede en la que recogerá su nueva tarjeta.</p>
                         <div className="sedes-container flex w-full gap-[20px] justify-center items-center flex-wrap max-h-[518px] overflow-y-auto">
-                          <div>
+                          <div className='sedes-cercanas'>
                             {verSedesCercanas()}
                           </div>
                         </div>
@@ -334,7 +334,7 @@ function App() {
               ) : (
                 <div className="home-container">
                   <div className='flex flex-col gap-[30px]'>
-                    <p className="font-['Montserrat'] text-[4em] font-bold text-[#004680]">Muchas gracias por completar sus datos</p>
+                    <p className="font-['Montserrat'] text-[3em] font-bold text-[#004680]">Muchas gracias por completar sus datos</p>
                     <p className="font-['Montserrat'] text-[1.4em] font-bold text-[#0D0B30]">En breves momentos, un asesor del BBVA se contactara con usted para continuar con el proceso.</p>
                   </div>
                 </div>
