@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/quiz-bbva/static/css/main.a61deda7.css",
+    "main.js": "/quiz-bbva/static/js/main.4acda598.js",
+    "static/js/787.1ea11586.chunk.js": "/quiz-bbva/static/js/787.1ea11586.chunk.js",
+    "index.html": "/quiz-bbva/index.html",
+    "main.a61deda7.css.map": "/quiz-bbva/static/css/main.a61deda7.css.map",
+    "main.4acda598.js.map": "/quiz-bbva/static/js/main.4acda598.js.map",
+    "787.1ea11586.chunk.js.map": "/quiz-bbva/static/js/787.1ea11586.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a61deda7.css",
+    "static/js/main.4acda598.js"
+  ]
+}
